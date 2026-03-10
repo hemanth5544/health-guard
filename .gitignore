@@ -1,0 +1,64 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Node dependencies
+/node_modules/
+**/node_modules/
+.pnp/
+.pnpm/
+
+# pnpm store (optional)
+.pnpm-store/
+
+# Build output
+/dist/
+/build/
+/out/
+/coverage/
+/.next/
+/storybook-static/
+**/dist/
+**/build/
+**/out/
+
+# Turborepo
+/.turbo/
+/turbo-debug.log
+
+# Expo / React Native
+/.expo/
+/.expo-shared/
+/android/
+/ios/
+
+# Environment variables
+.env
+.env.*
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+
+
+# Temp files
+tmp/
+temp/
+*.tmp
+*.temp

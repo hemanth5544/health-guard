@@ -1,0 +1,10 @@
+# Ignore per-app node_modules and build artifacts
+node_modules/
+
+# Ignore local environment config
+.env
+.env.*
+
+# Ignore log and temp files
+*.log
+tmp/

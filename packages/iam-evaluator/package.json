@@ -1,0 +1,23 @@
+{
+  "name": "@healthguard/iam-evaluator",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch",
+    "lint": "echo \"(no lint)\"",
+    "test": "echo \"(no tests)\""
+  },
+  "dependencies": {
+    "@prisma/client": "^6.5.0",
+    "@healthguard/shared-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@healthguard/tsconfig": "workspace:*",
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2"
+  }
+}
+

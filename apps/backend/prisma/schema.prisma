@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  passwordHash  String
+  role          Role           @default(PATIENT)
+  aadhaarLast4  String?
+  aadhaarEnc    String?        // Encrypted at rest (full value, optional for demo)
+  createdAt     DateTime       @default(now())
+  sessions      Session[]
+  auditLogs     AuditLog[]
+  patientRecord PatientRecord?
+}
+
+enum Role {
+  PATIENT
+  TECHNICIAN
+  DOCTOR
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  token        String   @unique
+  ipAddress    String
+  userAgent    String
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime
+  invalidated  Boolean  @default(false)
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model PatientRecord {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  bloodPressure  String?
+  heartRate      Int?
+  oxygenLevel    Float?
+  temperature    Float?
+  weight         Float?
+  bloodGroup     String?
+  diagnosis      String?
+  techNotes      String?
+  updatedAt      DateTime @updatedAt
+  user           User     @relation(fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  userId      String?
+  action      String
+  resource    String?
+  ipAddress   String
+  statusCode  Int
+  details     Json?
+  timestamp   DateTime @default(now())
+  severity    Severity @default(INFO)
+  user        User?    @relation(fields: [userId], references: [id])
+}
+
+enum Severity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+model IntrusionAttempt {
+  id          String   @id @default(uuid())
+  ipAddress   String
+  attemptType String
+  payload     Json?
+  timestamp   DateTime @default(now())
+  blocked     Boolean  @default(true)
+}
+

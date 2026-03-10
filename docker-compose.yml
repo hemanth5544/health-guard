@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: healthguard
+      POSTGRES_USER: healthuser
+      POSTGRES_PASSWORD: healthpass
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./apps/backend/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://healthuser:healthpass@postgres:5432/healthguard
+      JWT_SECRET: super-secret-jwt-key-change-in-prod
+      PORT: 3000
+      ENCRYPTION_KEY: change-me-32-bytes-minimum-key!!
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:
+

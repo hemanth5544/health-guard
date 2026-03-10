@@ -1,0 +1,10 @@
+# Ignore per-package node_modules
+node_modules/
+
+# Ignore local environment config
+.env
+.env.*
+
+# Ignore log and temp files
+*.log
+tmp/
