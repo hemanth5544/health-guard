@@ -5,7 +5,6 @@ import {
   type ThreatEntry
 } from "@healthguard/shared-types";
 
-
 export async function simulateAttacks(baseUrl: string): Promise<AttackReport> {
   const results: AttackReport["results"] = [];
   const safeFetch = async (input: string, init?: RequestInit) => {
@@ -229,3 +228,4 @@ export async function simulateAttacks(baseUrl: string): Promise<AttackReport> {
   return { blocked, succeeded, results };
 }
 
+export { evaluateIamControls } from "./controls";
