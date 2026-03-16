@@ -146,7 +146,7 @@ export function IAMDashboardScreen() {
         </View>
       </Card>
 
-      <Card title="Top threats (0–20)">
+      {/* <Card title="Top threats (0–20)">
         {!data ? (
           <Text style={styles.muted}>Run evaluation to populate threats.</Text>
         ) : (
@@ -167,7 +167,7 @@ export function IAMDashboardScreen() {
             })}
           </View>
         )}
-      </Card>
+      </Card> */}
 
       <Card title="Intrusion attempts">
         {qIntrusion.isLoading ? (

@@ -75,15 +75,15 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
     return res.status(401).json({ success: false, message: "Session expired", data: null });
   }
 
-  if (session.ipAddress !== ipAddress) {
-    await writeIntrusion({
-      prisma,
-      ipAddress,
-      attemptType: "IP_MISMATCH",
-      payload: { sessionId: session.id, expected: session.ipAddress, got: ipAddress, userAgent }
-    });
-    return res.status(401).json({ success: false, message: "Session IP mismatch", data: null });
-  }
+  // if (session.ipAddress !== ipAddress) {
+  //   await writeIntrusion({
+  //     prisma,
+  //     ipAddress,
+  //     attemptType: "IP_MISMATCH",
+  //     payload: { sessionId: session.id, expected: session.ipAddress, got: ipAddress, userAgent }
+  //   });
+  //   return res.status(401).json({ success: false, message: "Session IP mismatch", data: null });
+  // }
 
   const user = await prisma.user.findUnique({ where: { id: verified.claims.sub } });
   if (!user) return res.status(401).json({ success: false, message: "User not found", data: null });
