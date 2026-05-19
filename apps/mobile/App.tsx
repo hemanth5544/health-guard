@@ -5,6 +5,7 @@ import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator, BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Shield, Activity, User2 } from "lucide-react-native";
 import { useAuthStore } from "./src/state/authStore";
 import { LoginScreen } from "./src/screens/LoginScreen";
 import { RegisterScreen } from "./src/screens/RegisterScreen";
@@ -17,8 +18,7 @@ const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 
-const tabLabels = ["ACCOUNT", "VITALS", "IAM SHIELD"] as const;
-const tabIcons = ["👤", "❤️", "🛡️"] as const;
+const tabLabels = ["ACCOUNT", "VITALS", "IAM DASHBOARD"] as const;
 
 function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   return (
@@ -37,16 +37,23 @@ function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
               }
             };
             const label = tabLabels[index] ?? route.name.toUpperCase();
-            const icon = tabIcons[index] ?? "•";
+
+            const IconComp =
+              route.name === "Account"
+                ? User2
+                : route.name === "Health & Vitals"
+                  ? Activity
+                  : Shield;
+
             return (
               <View key={route.key} style={stylesTab.itemWrap}>
                 <View style={[stylesTab.item, isFocused && stylesTab.itemActive]}>
-                  <Text
+                  <IconComp
                     onPress={onPress}
-                    style={[stylesTab.icon, isFocused ? stylesTab.iconActive : stylesTab.iconInactive]}
-                  >
-                    {/* {icon} */}
-                  </Text>
+                    size={18}
+                    color={isFocused ? "#020617" : theme.colors.textMuted}
+                    style={stylesTab.icon}
+                  />
                   <Text
                     onPress={onPress}
                     style={[stylesTab.label, isFocused ? stylesTab.labelActive : stylesTab.labelInactive]}
@@ -67,7 +74,13 @@ function AppTabs() {
     <Tabs.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: { position: "absolute" }
+        tabBarStyle: {
+          position: "absolute",
+          backgroundColor: "transparent",
+          borderTopWidth: 0,
+          elevation: 0,
+          height: 74
+        }
       }}
       tabBar={(props) => <FloatingTabBar {...props} />}
     >
@@ -117,19 +130,26 @@ export default function App() {
 const stylesTab = StyleSheet.create({
   root: {
     position: "absolute",
-    bottom: 32,
-    left: 0,
-    right: 0,
-    alignItems: "center"
+    bottom: 20,
+    left: 16,
+    right: 16,
+    alignItems: "center",
+    zIndex: 10
   },
   pill: {
+    width: "100%",
     flexDirection: "row",
-    backgroundColor: "rgba(15,22,35,0.96)",
+    backgroundColor: "rgba(15,22,35,0.95)",
     borderRadius: 40,
     borderWidth: 1,
     borderColor: theme.colors.border,
     paddingHorizontal: 10,
-    paddingVertical: 6
+    paddingVertical: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 8
   },
   itemWrap: {
     flex: 1,
@@ -148,8 +168,7 @@ const stylesTab = StyleSheet.create({
     backgroundColor: theme.colors.accent
   },
   icon: {
-    fontSize: 16,
-    marginRight: 4
+    marginRight: 6
   },
   iconActive: {
     color: "#020617"

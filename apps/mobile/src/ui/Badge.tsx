@@ -1,17 +1,23 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
+import { theme } from "../theme";
 
-export function Badge(props: { label: string; color?: "green" | "yellow" | "red" | "blue" | "gray" }) {
+type BadgeTone = "green" | "yellow" | "red" | "blue" | "gray";
+
+export function Badge(props: { label: string; color?: BadgeTone }) {
+  const tone: BadgeTone = props.color ?? "gray";
+
   const backgroundColor =
-    props.color === "green"
-      ? "#059669"
-      : props.color === "yellow"
-        ? "#F59E0B"
-        : props.color === "red"
-          ? "#E11D48"
-          : props.color === "blue"
-            ? "#0284C7"
-            : "#475569";
+    tone === "green"
+      ? theme.colors.success
+      : tone === "yellow"
+        ? theme.colors.warning
+        : tone === "red"
+          ? theme.colors.danger
+          : tone === "blue"
+            ? theme.colors.accent
+            : theme.colors.textMuted;
+
   return (
     <View style={[styles.badge, { backgroundColor }]}>
       <Text style={styles.text}>{props.label}</Text>
@@ -26,9 +32,11 @@ const styles = StyleSheet.create({
     borderRadius: 999
   },
   text: {
-    color: "#FFFFFF",
+    color: theme.colors.textPrimary,
     fontSize: 12,
-    fontWeight: "700"
+    fontWeight: "700",
+    letterSpacing: 0.4
   }
 });
+
 

@@ -7,6 +7,20 @@ import { Card } from "../ui/Card";
 import { Badge } from "../ui/Badge";
 import { Button } from "../ui/Button";
 import { Role } from "@healthguard/shared-types";
+import { theme } from "../theme";
+
+function ProgressRow({ label, value, max = 100 }: { label: string; value: number; max?: number }) {
+  const ratio = Math.max(0, Math.min(1, max === 0 ? 0 : value / max));
+  return (
+    <View style={styles.progressRow}>
+      <Text style={styles.muted}>{label}</Text>
+      <View style={styles.progressTrack}>
+        <View style={[styles.progressFill, { width: `${ratio * 100}%` }]} />
+      </View>
+      <Text style={styles.value}>{Math.round(value)} / {max}</Text>
+    </View>
+  );
+}
 
 export function AccountScreen() {
   const user = useAuthStore((s) => s.user);
@@ -26,13 +40,15 @@ export function AccountScreen() {
 
   const roleColor =
     user?.role === Role.DOCTOR ? "red" : user?.role === Role.TECHNICIAN ? "yellow" : "green";
+  const trustScore = (user as any)?.trustScore ?? 78;
+  const securityScore = (user as any)?.securityScore ?? 86;
 
   return (
     <View style={styles.root}>
       <View style={styles.header} />
       <View style={styles.body}>
       <Card
-        title="Account"
+        title={`Hi, ${user?.email ? user.email.split("@")[0] : "User"}`}
         right={user?.role ? <Badge label={user.role} color={roleColor as any} /> : null}
       >
         <Text style={styles.label}>Email</Text>
@@ -46,12 +62,15 @@ export function AccountScreen() {
             </Text>
           </>
         )}
+
+        <ProgressRow label="Account trust" value={trustScore} />
+        <ProgressRow label="Security posture" value={securityScore} />
       </Card>
 
       <Card title="Session">
         <Text style={[styles.label, { marginBottom: 4 }]}>Session Status</Text>
         <Text style={styles.value}>
-          {q.isLoading ? "Loading..." : q.isError ? "Invalidated ❌" : "Active ✅"}
+          {q.isLoading ? "Loading..." : q.isError ? "Invalidated" : "Active"}
         </Text>
         <Text style={styles.help}>
           DP.IAM.SESSION.003: server-side invalidation is enforced on every request.
@@ -74,11 +93,11 @@ export function AccountScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#020617"
+    backgroundColor: theme.colors.bg
   },
   header: {
     height: 36,
-    backgroundColor: "#022c22"
+    backgroundColor: theme.colors.bgElevated
   },
   body: {
     flex: 1,
@@ -87,16 +106,35 @@ const styles = StyleSheet.create({
     paddingBottom: 16
   },
   label: {
-    color: "#CBD5F5".replace("F5", "F5"), // soft slate
+    color: theme.colors.textSecondary,
     marginBottom: 4
   },
+  progressRow: {
+    marginTop: 10,
+    gap: 6
+  },
+  progressTrack: {
+    height: 8,
+    borderRadius: 999,
+    backgroundColor: theme.colors.bgElevated,
+    overflow: "hidden",
+    marginVertical: 4
+  },
+  progressFill: {
+    height: "100%",
+    borderRadius: 999,
+    backgroundColor: theme.colors.accent
+  },
+  muted: {
+    color: theme.colors.textSecondary
+  },
   value: {
-    color: "#FFFFFF",
+    color: theme.colors.textPrimary,
     fontWeight: "700",
     marginBottom: 12
   },
   help: {
-    color: "#94A3B8",
+    color: theme.colors.textMuted,
     marginTop: 8,
     fontSize: 11
   },

@@ -26,7 +26,10 @@ export function RegisterScreen({ navigation }: any) {
       setError(null);
       navigation.navigate("Login");
     },
-    onError: (e: any) => setError(e?.response?.data?.message ?? "Registration failed")
+    onError: (e: any) => {
+      console.log(e);
+      setError(e?.response?.data?.message ?? "Registration failed");
+    }
   });
 
   return (

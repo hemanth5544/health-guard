@@ -1,5 +1,6 @@
 import React from "react";
 import { Pressable, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { theme } from "../theme";
 
 export function Button(props: {
   label: string;
@@ -21,7 +22,7 @@ export function Button(props: {
       style={pressableStyle}
     >
       {props.loading ? (
-        <ActivityIndicator color={variant === "secondary" ? "#E2E8F0" : "#0B1220"} />
+        <ActivityIndicator color={variant === "secondary" ? theme.colors.textPrimary : "#020617"} />
       ) : (
         <Text style={[styles.text, textColor]}>{props.label}</Text>
       )}
@@ -31,18 +32,22 @@ export function Button(props: {
 
 const styles = StyleSheet.create({
   base: {
-    borderRadius: 14,
+    borderRadius: theme.radius.md,
     paddingHorizontal: 16,
     paddingVertical: 12,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    shadowColor: theme.shadow.glow.shadowColor,
+    shadowOpacity: 0.2,
+    shadowRadius: 10
   },
-  primary: { backgroundColor: "#F59E0B" },
-  secondary: { backgroundColor: "#1F2937" },
-  danger: { backgroundColor: "#E11D48" },
-  disabled: { opacity: 0.55 },
-  text: { fontSize: 15, fontWeight: "800" },
-  textOnLight: { color: "#0B1220" },
-  textOnDark: { color: "#E2E8F0" }
+  primary: { backgroundColor: theme.colors.accent },
+  secondary: { backgroundColor: theme.colors.bgElevated, borderWidth: 1, borderColor: theme.colors.border },
+  danger: { backgroundColor: theme.colors.danger },
+  disabled: { opacity: 0.5 },
+  text: { fontSize: 15, fontWeight: "700", letterSpacing: 0.3 },
+  textOnLight: { color: "#020617" },
+  textOnDark: { color: theme.colors.textPrimary }
 });
+
 

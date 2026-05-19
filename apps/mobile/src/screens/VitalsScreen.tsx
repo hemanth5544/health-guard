@@ -7,6 +7,7 @@ import { Role, type PatientRecord } from "@healthguard/shared-types";
 import { Card } from "../ui/Card";
 import { Button } from "../ui/Button";
 import { Input } from "../ui/Input";
+import { theme } from "../theme";
 
 function fmt(v: any) {
   if (v === null || v === undefined || v === "") return "-";
@@ -109,7 +110,7 @@ export function VitalsScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#020617"
+    backgroundColor: theme.colors.bg
   },
   content: {
     paddingHorizontal: 20,
@@ -124,17 +125,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   label: {
-    color: "#CBD5F5".replace("F5", "F5")
+    color: theme.colors.textSecondary
   },
   value: {
-    color: "#FFFFFF",
+    color: theme.colors.textPrimary,
     fontWeight: "700"
   },
   muted: {
-    color: "#9CA3AF"
+    color: theme.colors.textSecondary
   },
   error: {
-    color: "#FB7185",
+    color: theme.colors.danger,
     fontWeight: "600"
   }
 });

@@ -8,8 +8,8 @@ import { Button } from "../ui/Button";
 
 export function LoginScreen({ navigation }: any) {
   const setAuth = useAuthStore((s) => s.setAuth);
-  const [email, setEmail] = useState("patient@test.com");
-  const [password, setPassword] = useState("Patient@123");
+  const [email, setEmail] = useState("doctor@credo.com");
+  const [password, setPassword] = useState("credo5544");
   const [error, setError] = useState<string | null>(null);
 
   const mut = useMutation({

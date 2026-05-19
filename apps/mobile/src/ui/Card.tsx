@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { theme } from "../theme";
 
 export function Card(props: { title?: string; children: React.ReactNode; right?: React.ReactNode }) {
   return (
@@ -17,12 +18,15 @@ export function Card(props: { title?: string; children: React.ReactNode; right?:
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "rgba(15, 23, 42, 0.72)", // slate-900-ish
-    borderColor: "rgba(51, 65, 85, 0.6)", // slate-700-ish
+    backgroundColor: theme.colors.bgCard,
+    borderColor: theme.colors.border,
     borderWidth: 1,
-    borderRadius: 18,
+    borderRadius: theme.radius.lg,
     padding: 16,
-    marginBottom: 12
+    marginBottom: 16,
+    shadowColor: theme.shadow.card.shadowColor,
+    shadowOpacity: theme.shadow.card.shadowOpacity,
+    shadowRadius: theme.shadow.card.shadowRadius
   },
   headerRow: {
     flexDirection: "row",
@@ -31,9 +35,11 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   title: {
-    color: "#FFFFFF",
+    color: theme.colors.textPrimary,
     fontSize: 16,
-    fontWeight: "700"
+    fontWeight: "700",
+    letterSpacing: 0.3
   }
 });
+
 

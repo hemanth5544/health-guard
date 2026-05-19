@@ -229,3 +229,5 @@ export async function simulateAttacks(baseUrl: string): Promise<AttackReport> {
   return { blocked, succeeded, results };
 }
 
+export { evaluateIamControls } from "./controls";
+export { simulateAttacks } from "./simulateAttacks";

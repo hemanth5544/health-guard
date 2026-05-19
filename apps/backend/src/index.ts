@@ -5,8 +5,7 @@ import { getLocalIp } from "./config/network.js";
 
 const app = createApp();
 
-app.listen(env.PORT, () => {
+app.listen(env.PORT, "0.0.0.0", () => {
   const ip = getLocalIp();
   console.log(`Server running on http://${ip}:${env.PORT}`);
 });
-
